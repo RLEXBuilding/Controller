@@ -1,0 +1,5 @@
+.vscode
+Thumbs.db
+*.o
+*.exe
+**debug
