@@ -15,8 +15,8 @@ func InitializeCommands() {
 }
 
 func RunCommand(cmd string) {
-	args := strings.Fields(cmd)
-	var element = getElementByString(cmd)
+	args := strings.Split(cmd, " ")
+	var element = getElementByString(args[0])
 	if element == nil {
 		fmt.Println("Cannot resolve this command. Type help for a help gui")
 	} else {
@@ -25,7 +25,9 @@ func RunCommand(cmd string) {
 }
 
 func getElementByString(cmd string) Command {
+	fmt.Println(cmd)
 	for _, element := range commands {
+		fmt.Println(element.GetName())
 		if strings.EqualFold(element.GetName(), cmd) {
 			return element
 		}
