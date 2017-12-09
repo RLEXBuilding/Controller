@@ -11,12 +11,15 @@ type Command interface {
 var commands []Command
 
 func InitializeCommands() {
+	commands = append(commands, new(ExitCommand))
 	commands = append(commands, new(HelpCommand))
 }
 
 func RunCommand(cmd string) {
-	args := strings.Split(cmd, " ")
-	var element = getElementByString(args[0])
+	args := strings.Split(strings.TrimSpace(cmd), " ")
+	//fmt.Printf("Input: %s\n", args[0])
+	element := getElementByString(args[0])
+	//fmt.Printf("Result: %s\n", element)
 	if element == nil {
 		fmt.Println("Cannot resolve this command. Type help for a help gui")
 	} else {
@@ -25,9 +28,10 @@ func RunCommand(cmd string) {
 }
 
 func getElementByString(cmd string) Command {
-	fmt.Println(cmd)
 	for _, element := range commands {
-		fmt.Println(element.GetName())
+//		fmt.Printf("           Input: '%s'\n", cmd)
+//		fmt.Printf("Querying Command: %s\n",element)
+//		fmt.Printf("            Name: '%s'\n", element.GetName())
 		if strings.EqualFold(element.GetName(), cmd) {
 			return element
 		}
