@@ -1,6 +1,9 @@
 package commands
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 type HelpCommand struct {
 	name string
@@ -12,7 +15,7 @@ func (command HelpCommand) GetName() string {
 
 func (command HelpCommand) Execute(args []string) {
 	fmt.Println("HELP")
-	for _, element := range commands {
-		fmt.Println(element.GetName())
+	for i, element := range commands {
+		fmt.Println(strconv.Itoa(i) + ":" + element.GetName())
 	}
 }

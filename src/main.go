@@ -18,10 +18,12 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)
 	//m := make(map[string]string)
 	for true {
+		fmt.Print("> ")
 		text, err := reader.ReadString('\n')
 		if err != nil {
 			fmt.Println(err)
 		}
+		fmt.Println("$ " + text)
 		commands.RunCommand(text)
 		//value := strings.Fields(text)
 		//m[value[0]] = value[1]
