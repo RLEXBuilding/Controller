@@ -2,7 +2,6 @@ package commands
 
 import (
 	"fmt"
-	"strconv"
 	"strings"
 )
 
@@ -14,19 +13,17 @@ type Command interface {
 var commands []Command
 
 func InitializeCommands() {
+	commands = append(commands, new(ExitCommand))
 	commands = append(commands, new(HelpCommand))
+	commands = append(commands, new(ShellCommand))
 	commands = append(commands, new(WhoisCommand))
+	commands = append(commands, new(PortScanCommand))
+	commands = append(commands, new(SshBruteForceCommand))
 }
 
 func RunCommand(cmd string) {
-
-	args := deleteEmptyEntrysInSlice(strings.Split(""+cmd, " "))
-
-	for i, arg := range args {
-		fmt.Println(strconv.Itoa(i) + "-" + arg)
-	}
-
-	var element = getElementByString(args[0])
+	args := strings.Split(strings.TrimSpace(cmd), " ")
+	element := getElementByString(args[0])
 	if element == nil {
 		fmt.Println("Cannot resolve this command. Type help for a help gui")
 	} else {
@@ -35,26 +32,10 @@ func RunCommand(cmd string) {
 }
 
 func getElementByString(cmd string) Command {
-	fmt.Println(cmd)
-	for i, element := range commands {
-		fmt.Println(strconv.Itoa(i) + ":" + element.GetName())
+	for _, element := range commands {
 		if strings.EqualFold(element.GetName(), cmd) {
-			fmt.Println("Resolved " + element.GetName())
 			return element
 		}
 	}
 	return nil
-}
-
-func deleteEmptyEntrysInSlice(s []string) []string {
-	var r []string
-	for _, str := range s {
-		if str != "" {
-			r = append(r, str)
-			fmt.Println(str + "-YES")
-		} else {
-			fmt.Println(str + "-NOPE")
-		}
-	}
-	return r
 }
