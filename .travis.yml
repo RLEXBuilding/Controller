@@ -1,7 +1,18 @@
 language: go
-sudo: true
+os:
+  - linux
+  - osx
+  - windows
+go:
+  - 1.x
+  - 1.6
+  - 1.7.x
+  - master
+sudo: false
 before_script:
   - go vet ./...
+script:
+  - make
 install:
   - export GOPATH="${TRAVIS_BUILD_DIR}/Godeps/_workspace:$GOPATH"
   - export PATH="${TRAVIS_BUILD_DIR}/Godeps/_workspace/bin:$PATH"
