@@ -24,15 +24,34 @@ func (command SshBruteForceCommand) String() string {
 }
 
 var trys = 0
+var enabled = true
 
 func (command SshBruteForceCommand) Execute(args []string) {
+
 	address := args[0]
 	user := args[1]
-	fmt.Println()
-	for true {
+
+	/*
+		// TODO: Add breaker, which ends the action on ^C
+		go func() {
+			reader := bufio.NewReader(os.Stdin)
+			for true {
+				text, err := reader.ReadString('\n')
+				if err != nil {
+					fmt.Println(err)
+				}
+				if strings.EqualFold(text, "^C") {
+					enabled = false
+				}
+
+			}
+		}()*/
+
+	for enabled {
 		result, err := trySSHConnection(address, user)
 		if result {
 			fmt.Println("Success, your password is: " + currentPassword)
+			break
 		} else {
 			trys++
 			tm.Println("Trys: " + strconv.Itoa(trys) + ";Error: " + err.Error() + "; Current Password: " + currentPassword)
