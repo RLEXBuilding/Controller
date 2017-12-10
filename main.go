@@ -7,11 +7,12 @@ import (
 	"runtime"
 
 	"github.com/RLEXBuilding/Controller/commands"
+	"github.com/fatih/color"
 )
 
 func main() {
 	commands.InitializeCommands()
-	fmt.Println("Welcome on the Controller of magic")
+	fmt.Fprintln(color.Output, "Welcome on the Controller of "+color.MagentaString("magic"))
 	fmt.Println("We don't support illegal actions. It's your choice :).")
 	fmt.Println()
 	fmt.Println("OS: " + runtime.GOOS)
@@ -19,7 +20,7 @@ func main() {
 	fmt.Println()
 	reader := bufio.NewReader(os.Stdin)
 	for true {
-		fmt.Print("> ")
+		fmt.Fprint(color.Output, color.GreenString("> "))
 		text, err := reader.ReadString('\n')
 		if err != nil {
 			fmt.Println(err)

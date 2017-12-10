@@ -3,6 +3,8 @@ package commands
 import (
 	"fmt"
 	"strings"
+
+	"github.com/fatih/color"
 )
 
 type Command interface {
@@ -25,7 +27,7 @@ func RunCommand(cmd string) {
 	args := strings.Split(strings.TrimSpace(cmd), " ")
 	element := getElementByString(args[0])
 	if element == nil {
-		fmt.Println("Cannot resolve this command. Type help for a help gui")
+		fmt.Fprintln(color.Output, "Cannot resolve this command. Type "+color.YellowString("help")+" for a help gui")
 	} else {
 		element.Execute(append(args[:0], args[0+1:]...))
 	}

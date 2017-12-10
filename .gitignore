@@ -1,5 +1,6 @@
-.vscode
+.vscode/
 Thumbs.db
 *.o
 *.exe
-**debug
+debug
+out/
