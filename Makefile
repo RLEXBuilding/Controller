@@ -1,5 +1,5 @@
 buildExecutable: 
-  go build -o "out/Controller.exe" "./src";
-  go build -o "out/Controller.o" "./src";
-  done; exit;
+  $(shell go build -o "out/Controller.exe") \
+  $(shell go build -o "out/Controller.o") \
+.PHONY: all
 all: buildExecutable
