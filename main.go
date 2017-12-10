@@ -6,7 +6,7 @@ import (
 	"os"
 	"runtime"
 
-	commands "./commands"
+	"github.com/RLEXBuilding/Controller/commands"
 )
 
 func main() {
