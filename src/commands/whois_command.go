@@ -14,9 +14,14 @@ func (command WhoisCommand) GetName() string {
 	return "whois"
 }
 
+func (command WhoisCommand) String() string {
+	return "<Command 'whois'>"
+}
+
 func (command WhoisCommand) Execute(args []string) {
 	if len(args) < 2 {
 		fmt.Println(fmt.Sprintf("usage:\n\t%s domain [server]", args[0]))
+		return
 	}
 
 	var server string

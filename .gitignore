@@ -3,4 +3,4 @@ Thumbs.db
 *.o
 *.exe
 **debug
-src
+src.exe

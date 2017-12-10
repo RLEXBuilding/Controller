@@ -1,9 +1,12 @@
 package commands
 
-import "fmt"
-import "os"
+import (
+	"fmt"
+	"os"
+	"time"
+)
 
-type  ExitCommand struct {
+type ExitCommand struct {
 	name string
 }
 
@@ -17,5 +20,6 @@ func (command ExitCommand) String() string {
 
 func (command ExitCommand) Execute(args []string) {
 	fmt.Println("See You later Alligator")
+	time.Sleep(2 * time.Second)
 	os.Exit(0)
 }
