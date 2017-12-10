@@ -1,4 +1,4 @@
-# Controller
+# Controller [![Build Status](https://travis-ci.org/RLEXBuilding/Controller.svg?branch=master)](https://travis-ci.org/RLEXBuilding/Controller)
 
 ## Description
 This project named controller, because it should control all things.
