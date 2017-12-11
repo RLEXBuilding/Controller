@@ -21,6 +21,8 @@ func InitializeCommands() {
 	commands = append(commands, new(WhoisCommand))
 	commands = append(commands, new(PortScanCommand))
 	commands = append(commands, new(SshBruteForceCommand))
+	commands = append(commands, new(ListFilesCommand))
+	commands = append(commands, new(HackImitateCommand))
 }
 
 func RunCommand(cmd string) {
@@ -40,4 +42,15 @@ func getElementByString(cmd string) Command {
 		}
 	}
 	return nil
+}
+
+func getStringRepeatedByInt(str string, repeated int) string {
+	str2 := ""
+	i := 1
+	for i <= repeated {
+		str2 += str
+		i++
+	}
+
+	return str2
 }
