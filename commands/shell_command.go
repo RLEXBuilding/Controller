@@ -19,6 +19,10 @@ func (command ShellCommand) String() string {
 }
 
 func (command ShellCommand) Execute(args []string) {
+	if len(args) < 1 {
+		fmt.Println("Missing arguments.")
+		return
+	}
 	cmd := strings.Join(args[1:], " ")
 	res, _ := exec.Command(args[0], cmd).Output()
 	fmt.Println("= " + string(res))
