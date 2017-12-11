@@ -6,7 +6,7 @@ import (
 	"os"
 	"runtime"
 
-	"./commands"
+	"github.com/RLEXBuilding/Controller/commands"
 	"github.com/fatih/color"
 )
 
