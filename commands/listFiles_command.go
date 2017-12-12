@@ -25,7 +25,7 @@ func (command ListFilesCommand) String() string {
 func (command ListFilesCommand) Execute(args []string) {
 	dir := ""
 	if len(args) > 0 {
-		dir = strings.Join(args, " ")
+		dir = strings.Join(args, " ") // TODO: Add here please a support for the -noDir tags etc. Thanks!
 	} else {
 		dir = os.Getenv("SYSTEMDRIVE") + "\\"
 	}
@@ -33,12 +33,53 @@ func (command ListFilesCommand) Execute(args []string) {
 	explanation := "| " + color.YellowString("\u2588"+" = Directory") + " | "
 	explanation += color.RedString("\u2588"+" = Directory without access") + " | "
 	explanation += color.CyanString("\u2588"+" = File") + " | "
+	dirs := true
+	files := true
 
 	fmt.Fprintln(color.Output, explanation)
-	listFiles(dir, 0)
+	if strings.Contains(strings.ToLower(strings.Join(args, " ")), strings.ToLower("-noDir")) {
+		dirs = false
+	}
+
+	if strings.Contains(strings.ToLower(strings.Join(args, " ")), strings.ToLower("-noFile")) {
+		files = false
+	}
+
+	if strings.Contains(strings.ToLower(strings.Join(args, " ")), strings.ToLower("-all")) {
+		listAllFiles(dir, 0)
+	} else {
+		listFiles(dir, dirs, files)
+	}
 }
 
-func listFiles(dir string, spaces int) {
+func listFiles(dir string, listDirs bool, listFiles bool) {
+
+	if !listDirs && !listFiles {
+		fmt.Fprintln(color.Output, color.HiMagentaString("Nothing - your filters are not allowing files and directorys"))
+		return
+	}
+
+	files, err := ioutil.ReadDir(dir)
+	if err != nil {
+		fmt.Println("error - " + err.Error())
+	}
+	for _, file := range files {
+		str := ""
+		if file.IsDir() && listDirs {
+			_, err := ioutil.ReadDir(filepath.Join(dir, file.Name()))
+			if err != nil {
+				str += color.RedString(file.Name())
+			} else {
+				str += color.YellowString(file.Name())
+			}
+		} else if listFiles {
+			str += color.CyanString(file.Name())
+		}
+		fmt.Fprintln(color.Output, str)
+	}
+}
+
+func listAllFiles(dir string, spaces int) {
 
 	defer func() {
 		if r := recover(); r != nil {
@@ -61,7 +102,7 @@ func listFiles(dir string, spaces int) {
 				} else {
 					if len(arr) > 0 {
 						fmt.Fprintln(color.Output, getStringRepeatedByInt(" ", spaces)+color.YellowString(file.Name()+" {"))
-						listFiles(filepath.Join(dir, file.Name()), spaces+2)
+						listAllFiles(filepath.Join(dir, file.Name()), spaces+2)
 						fmt.Fprintln(color.Output, getStringRepeatedByInt(" ", spaces)+color.YellowString("}"))
 					} else {
 						fmt.Fprintln(color.Output, getStringRepeatedByInt(" ", spaces)+color.YellowString(file.Name()))
