@@ -18,7 +18,7 @@ func (command WhoisCommand) String() string {
 	return "<Command 'whois'>"
 }
 
-func (command WhoisCommand) Execute(args []string) {
+func (command WhoisCommand) Execute(kill chan bool, args []string) {
 	if len(args) < 2 {
 		fmt.Println(fmt.Sprintf("usage:\n\t%s domain [server]", args[0]))
 		return

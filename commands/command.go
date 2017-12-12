@@ -5,11 +5,13 @@ import (
 	"strings"
 
 	"github.com/fatih/color"
+	"os"
+	"os/signal"
 )
 
 type Command interface {
 	GetName() string
-	Execute(args []string)
+	Execute(kill chan bool, args []string)
 }
 
 var commands []Command
@@ -32,10 +34,21 @@ func RunCommand(cmd string) {
 	if element == nil {
 		fmt.Fprintln(color.Output, "Cannot resolve this command. Type "+color.YellowString("help")+" for a help gui")
 	} else {
-		element.Execute(append(args[:0], args[0+1:]...))
+		RunCommandAsync(element, args)
 	}
 }
 
+func RunCommandAsync(command Command, args []string) {
+	kill := make(chan bool, 1)
+	signals := make(chan os.Signal, 1)
+	signal.Notify(signals, os.Interrupt)
+	go func() {
+		for range signals {
+			kill <- true
+		}
+	}()
+	command.Execute(kill, args[1:])
+}
 func getElementByString(cmd string) Command {
 	for _, element := range commands {
 		if strings.EqualFold(element.GetName(), cmd) {

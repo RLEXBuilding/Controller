@@ -17,7 +17,7 @@ func (command HelpCommand) String() string {
 	return "<Command 'help'>"
 }
 
-func (command HelpCommand) Execute(args []string) {
+func (command HelpCommand) Execute(kill chan bool, args []string) {
 	fmt.Println("HELP")
 	for i, element := range commands {
 		fmt.Println(strconv.Itoa(i) + ":" + element.GetName())

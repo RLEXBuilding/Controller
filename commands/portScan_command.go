@@ -20,7 +20,7 @@ func (command PortScanCommand) String() string {
 	return "<Command 'portscan'>"
 }
 
-func (command PortScanCommand) Execute(args []string) {
+func (command PortScanCommand) Execute(kill chan bool, args []string) {
 	if len(args) < 3 {
 		fmt.Println("portscan <address> <port-from> <port-to>")
 	}
