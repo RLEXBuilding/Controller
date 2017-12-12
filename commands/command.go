@@ -17,6 +17,7 @@ var commands []Command
 func InitializeCommands() {
 	commands = append(commands, new(ExitCommand))
 	commands = append(commands, new(HelpCommand))
+	commands = append(commands, new(EchoCommand))
 	commands = append(commands, new(ShellCommand))
 	commands = append(commands, new(WhoisCommand))
 	commands = append(commands, new(PortScanCommand))
