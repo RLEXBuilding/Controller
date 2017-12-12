@@ -18,7 +18,7 @@ func (command ShellCommand) String() string {
 	return "<Command 'shell'>"
 }
 
-func (command ShellCommand) Execute(args []string) {
+func (command ShellCommand) Execute(kill chan bool, args []string) {
 	if len(args) < 1 {
 		fmt.Println("Missing arguments.")
 		return

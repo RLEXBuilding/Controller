@@ -24,7 +24,7 @@ func (command HackImitateCommand) String() string {
 	return "<Command 'hackimitate'>"
 }
 
-func (command HackImitateCommand) Execute(args []string) {
+func (command HackImitateCommand) Execute(kill chan bool, args []string) {
 	fmt.Println("Its " + strconv.Itoa(time.Now().Day()) + "." + time.Now().Month().String() + "." + strconv.Itoa(time.Now().Year()))
 	time.Sleep(1 * time.Second)
 	fmt.Println("Starting hacking now...")
