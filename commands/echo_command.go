@@ -19,6 +19,6 @@ func (command EchoCommand) String() string {
 	return "<Command 'echo'>"
 }
 
-func (command EchoCommand) Execute(args []string) {
+func (command EchoCommand) Execute(kill chan bool, args []string) {
 	fmt.Fprintln(color.Output, strings.Join(args, " "))
 }
