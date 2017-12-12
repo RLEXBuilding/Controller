@@ -4,3 +4,4 @@ Thumbs.db
 *.exe
 debug
 out/
+.idea/
