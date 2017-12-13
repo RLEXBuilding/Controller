@@ -4,9 +4,10 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/fatih/color"
 	"os"
 	"os/signal"
+
+	"github.com/fatih/color"
 )
 
 type Command interface {
