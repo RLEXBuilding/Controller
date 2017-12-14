@@ -20,7 +20,7 @@ func (command WgetCommand) GetName() string {
 }
 
 func (command WgetCommand) GetDescription() string {
-	return "Downloads a file"
+	return color.CyanString("Downloads a file")
 }
 
 func (command WgetCommand) String() string {

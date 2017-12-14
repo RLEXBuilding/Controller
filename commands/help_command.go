@@ -24,6 +24,12 @@ func (command HelpCommand) String() string {
 
 func (command HelpCommand) Execute(kill chan bool, args []string) {
 	fmt.Println("--- Help ---")
+	explanation := "| " + color.YellowString("\u2588"+" = Could be illegal")
+	explanation += color.RedString("\u2588"+" = No Permission") + " | "
+	explanation += color.CyanString("\u2588"+" = Currently not working") + " | "
+
+	fmt.Println()
+	fmt.Println("------------")
 	for _, element := range commands {
 		fmt.Fprintln(color.Output, element.GetName()+" | "+element.GetDescription())
 	}
