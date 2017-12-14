@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/anvie/port-scanner"
+	"github.com/fatih/color"
 )
 
 type PortScanCommand struct {
@@ -21,8 +22,19 @@ func (command PortScanCommand) String() string {
 }
 
 func (command PortScanCommand) Execute(kill chan bool, args []string) {
+	/*
+		This command is not finished. If you want to help:
+		- Please add a system with arguments like "-tag"
+		  > "-async" argument
+		  > "-listClosed" argument
+		  > "-dontListOpened" argument
+		  > "-onlyList=open,closed" argument(or something like this)
+		  > "-asList" argument(should be displayed: 80,81)
+	*/
+
 	if len(args) < 3 {
 		fmt.Println("portscan <address> <port-from> <port-to>")
+		return
 	}
 
 	address := args[0]
@@ -39,14 +51,12 @@ func (command PortScanCommand) Execute(kill chan bool, args []string) {
 
 	ps := portscanner.NewPortScanner(address, 2*time.Second, 5)
 
-	// get opened port
 	fmt.Printf("scanning port %d-%d...\n", from, to)
 
-	openedPorts := ps.GetOpenedPort(from, to)
-
-	for i := 0; i < len(openedPorts); i++ {
-		port := openedPorts[i]
-		fmt.Print(" ", port, " [open]")
-		fmt.Println("  -  ", ps.DescribePort(port))
+	for i := from; i < to; i++ {
+		if ps.IsOpen(i) {
+			fmt.Fprint(color.Output, " ", i, color.GreenString(" [open]"))
+			fmt.Println("  -  ", ps.DescribePort(i))
+		}
 	}
 }
