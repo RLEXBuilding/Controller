@@ -28,7 +28,7 @@ func (command HelpCommand) Execute(kill chan bool, args []string) {
 	explanation += color.RedString("\u2588"+" = No Permission") + " | "
 	explanation += color.CyanString("\u2588"+" = Currently not working") + " | "
 
-	fmt.Println()
+	fmt.Println(explanation)
 	fmt.Println("------------")
 	for _, element := range commands {
 		fmt.Fprintln(color.Output, element.GetName()+" | "+element.GetDescription())
