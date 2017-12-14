@@ -15,6 +15,10 @@ func (command EchoCommand) GetName() string {
 	return "echo"
 }
 
+func (command EchoCommand) GetDescription() string {
+	return "Prints a string"
+}
+
 func (command EchoCommand) String() string {
 	return "<Command 'echo'>"
 }

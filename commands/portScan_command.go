@@ -17,6 +17,10 @@ func (command PortScanCommand) GetName() string {
 	return "portscan"
 }
 
+func (command PortScanCommand) GetDescription() string {
+	return color.YellowString("Scans a port range")
+}
+
 func (command PortScanCommand) String() string {
 	return "<Command 'portscan'>"
 }

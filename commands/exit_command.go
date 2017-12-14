@@ -14,6 +14,10 @@ func (command ExitCommand) GetName() string {
 	return "exit"
 }
 
+func (command ExitCommand) GetDescription() string {
+	return "Says Bye Bye"
+}
+
 func (command ExitCommand) String() string {
 	return "<Command 'exit'>"
 }

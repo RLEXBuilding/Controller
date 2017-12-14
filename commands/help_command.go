@@ -2,7 +2,8 @@ package commands
 
 import (
 	"fmt"
-	"strconv"
+
+	"github.com/fatih/color"
 )
 
 type HelpCommand struct {
@@ -13,13 +14,17 @@ func (command HelpCommand) GetName() string {
 	return "help"
 }
 
+func (command HelpCommand) GetDescription() string {
+	return "Shows a help ui"
+}
+
 func (command HelpCommand) String() string {
 	return "<Command 'help'>"
 }
 
 func (command HelpCommand) Execute(kill chan bool, args []string) {
-	fmt.Println("HELP")
-	for i, element := range commands {
-		fmt.Println(strconv.Itoa(i) + ":" + element.GetName())
+	fmt.Println("--- Help ---")
+	for _, element := range commands {
+		fmt.Fprintln(color.Output, element.GetName()+" | "+element.GetDescription())
 	}
 }

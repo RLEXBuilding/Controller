@@ -12,6 +12,7 @@ import (
 
 type Command interface {
 	GetName() string
+	GetDescription() string
 	Execute(kill chan bool, args []string)
 }
 

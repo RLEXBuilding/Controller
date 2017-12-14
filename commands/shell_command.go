@@ -14,6 +14,10 @@ func (command ShellCommand) GetName() string {
 	return "shell"
 }
 
+func (command ShellCommand) GetDescription() string {
+	return "Executes a shell command"
+}
+
 func (command ShellCommand) String() string {
 	return "<Command 'shell'>"
 }
