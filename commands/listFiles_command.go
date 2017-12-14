@@ -7,7 +7,6 @@ import (
 	"path/filepath"
 	"strings"
 
-	//"github.com/RLEXBuilding/Controller/util"
 	"github.com/RLEXBuilding/Controller/util"
 	"github.com/fatih/color"
 )
