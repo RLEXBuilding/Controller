@@ -9,7 +9,7 @@ const (
 	StringRune = '"'
 )
 
-func detectString(args []string) (startIndex int, endIndex int) {
+func DetectString(args []string) (startIndex int, endIndex int) {
 	str := strings.Join(args, " ")
 	if strings.Count(str, string(StringRune)) == 2 {
 		index := strings.Index(str, string(StringRune))

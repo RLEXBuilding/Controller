@@ -7,6 +7,8 @@ import (
 	"path/filepath"
 	"strings"
 
+	//"github.com/RLEXBuilding/Controller/util"
+	"github.com/RLEXBuilding/Controller/util"
 	"github.com/fatih/color"
 )
 
@@ -24,8 +26,19 @@ func (command ListFilesCommand) String() string {
 
 func (command ListFilesCommand) Execute(kill chan bool, args []string) {
 	dir := ""
+	arguments := ""
 	if len(args) > 0 {
-		dir = strings.Join(args, " ") // TODO: Add here please a support for the -noDir tags etc. Thanks!
+		startIndex, endIndex := util.DetectString(args)
+		dir = strings.Join(args, " ")
+
+		if startIndex != -1 || endIndex != -1 {
+			dir = string([]rune(dir)[startIndex+1 : endIndex])
+		} else {
+			dir = strings.Split(strings.Join(args, " "), "-")[0]
+			argumentsSplit := strings.Split(strings.Join(args, " "), "-")
+			argumentsSplit = argumentsSplit[1:len(argumentsSplit)]
+			arguments = "-" + strings.Join(argumentsSplit, " ")
+		}
 	} else {
 		dir = os.Getenv("SYSTEMDRIVE") + "\\"
 	}
@@ -37,15 +50,15 @@ func (command ListFilesCommand) Execute(kill chan bool, args []string) {
 	files := true
 
 	fmt.Fprintln(color.Output, explanation)
-	if strings.Contains(strings.ToLower(strings.Join(args, " ")), strings.ToLower("-noDir")) {
+	if strings.Contains(strings.ToLower(arguments), strings.ToLower("-noDir")) {
 		dirs = false
 	}
 
-	if strings.Contains(strings.ToLower(strings.Join(args, " ")), strings.ToLower("-noFile")) {
+	if strings.Contains(strings.ToLower(arguments), strings.ToLower("-noFile")) {
 		files = false
 	}
 
-	if strings.Contains(strings.ToLower(strings.Join(args, " ")), strings.ToLower("-all")) {
+	if strings.Contains(strings.ToLower(arguments), strings.ToLower("-all")) {
 		listAllFiles(dir, 0)
 	} else {
 		listFiles(dir, dirs, files)
