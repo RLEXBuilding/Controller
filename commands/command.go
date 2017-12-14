@@ -23,6 +23,7 @@ func InitializeCommands() {
 	commands = append(commands, new(HelpCommand))
 	commands = append(commands, new(EchoCommand))
 	commands = append(commands, new(ShellCommand))
+	commands = append(commands, new(WgetCommand))
 	commands = append(commands, new(WhoisCommand))
 	commands = append(commands, new(PortScanCommand))
 	commands = append(commands, new(SshBruteForceCommand))
