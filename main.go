@@ -15,7 +15,7 @@ func main() {
 	fmt.Fprintln(color.Output, "Welcome on the Controller of "+color.MagentaString("magic"))
 	fmt.Println("We don't support illegal actions. It's your choice :).")
 	fmt.Println()
-	fmt.Println("Operarion System: " + runtime.GOOS)
+	fmt.Println("Operation System: " + runtime.GOOS)
 	fmt.Println("Architecture: " + runtime.GOARCH)
 	fmt.Println()
 	reader := bufio.NewReader(os.Stdin)
@@ -23,7 +23,7 @@ func main() {
 		fmt.Fprint(color.Output, color.GreenString("> "))
 		text, err := reader.ReadString('\n')
 		if err != nil {
-			fmt.Println(err)
+			fmt.Fprintln(color.Output, err)
 		}
 		commands.RunCommand(text)
 	}
