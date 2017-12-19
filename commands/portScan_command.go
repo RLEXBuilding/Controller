@@ -27,13 +27,13 @@ func (command PortScanCommand) String() string {
 
 func (command PortScanCommand) Execute(kill chan bool, args []string) {
 	/*
-	This command is not finished. If you want to help:
-	- Please add a system with arguments like "-tag"
-	  > "-async" argument
-	  > "-listClosed" argument
-	  > "-dontListOpened" argument
-	  > "-onlyList=open,closed" argument(or something like this)
-	  > "-asList" argument(should be displayed: 80,81)
+		This command is not finished. If you want to help:
+		- Please add a system with arguments like "-tag"
+		  > "-async" argument
+		  > "-listClosed" argument
+		  > "-dontListOpened" argument
+		  > "-onlyList=open,closed" argument(or something like this)
+		  > "-asList" argument(should be displayed: 80,81)
 	*/
 	if len(args) < 1 {
 		fmt.Println("portscan <address> [port-from-inclusive] [port-to-exclusive] [timeout-in-milliseconds]")
@@ -78,7 +78,22 @@ func (command PortScanCommand) Execute(kill chan bool, args []string) {
 			return
 
 		default:
-			fmt.Printf("\rCurrent port: %5d", port)
+			progressBarMax := 10.0
+			progressBarStatus := ((float64(port) - float64(from)) / (float64(to) - float64(from))) * progressBarMax
+			progressBarPercent := ((float64(port) - float64(from)) / (float64(to) - float64(from))) * 100.0
+
+			progressBar := "["
+			for i := 0; i <= int(progressBarStatus); i++ {
+				progressBar += color.GreenString("\u2588")
+			}
+
+			remaining := progressBarMax - progressBarStatus
+
+			for i2 := 0; i2 <= int(remaining); i2++ {
+				progressBar += color.HiWhiteString("\u2588")
+			}
+			progressBar += "] " + strconv.FormatFloat(progressBarPercent, 'f', 1, 64)
+			fmt.Fprintf(color.Output, "\rCurrent port: %5d %s", port, progressBar+string('\u0025'))
 			if ps.IsOpen(port) {
 				fmt.Printf("\r %d [open]  -  %s\n", port, ps.DescribePort(port))
 			}
