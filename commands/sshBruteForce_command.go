@@ -79,9 +79,7 @@ func (command SshBruteForceCommand) Execute(kill chan bool, args []string) {
 				fmt.Printf("Success, your password is: %s\nTook %d tries\n", curPwd, tries)
 				return
 			}
-			//if tries%100000 == 0 {
-			fmt.Fprintf(color.Output, "\rTook "+color.HiCyanString("%d")+" tries without result. password: %s cuz: %s", tries, color.CyanString(curPwd), color.RedString(err.Error()))
-			//}
+			fmt.Fprintf(color.Output, "\r\rTook "+color.HiCyanString("%d")+" tries without result. password: %s cuz: %s", tries, color.CyanString(curPwd), color.RedString(err.Error()))
 		}
 	}
 }
@@ -92,7 +90,7 @@ func trySSHConnection(address string, user string, pass string) (result bool, er
 	config := &ssh.ClientConfig{
 		User: user,
 		Auth: []ssh.AuthMethod{
-			ssh.Password(pass),
+			ssh.Password(pass), // THIS HERE IS NOT WORKING!
 		},
 		HostKeyCallback: func(hostname string, remote net.Addr, key ssh.PublicKey) error {
 			return nil
