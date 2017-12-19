@@ -15,8 +15,8 @@ func main() {
 	fmt.Fprintln(color.Output, "Welcome on the Controller of "+color.MagentaString("magic"))
 	fmt.Println("We don't support illegal actions. It's your choice :).")
 	fmt.Println()
-	fmt.Println("OS: " + runtime.GOOS)
-	fmt.Println("ARCH: " + runtime.GOARCH)
+	fmt.Println("Operarion System: " + runtime.GOOS)
+	fmt.Println("Architecture: " + runtime.GOARCH)
 	fmt.Println()
 	reader := bufio.NewReader(os.Stdin)
 	for true {

@@ -20,6 +20,10 @@ func (command HackImitateCommand) GetName() string {
 	return "hackimitate"
 }
 
+func (command HackImitateCommand) GetDescription() string {
+	return "Imitates a screen, which prints deletions"
+}
+
 func (command HackImitateCommand) String() string {
 	return "<Command 'hackimitate'>"
 }

@@ -4,9 +4,10 @@ import (
 	"fmt"
 	"net"
 	"runtime"
+
+	"github.com/fatih/color"
 	"github.com/ngirot/BruteForce/bruteforce/words"
 	"golang.org/x/crypto/ssh"
-	"github.com/fatih/color"
 )
 
 type SshBruteForceCommand struct {
@@ -17,11 +18,18 @@ func (command SshBruteForceCommand) GetName() string {
 	return "sshBruteForce"
 }
 
+func (command SshBruteForceCommand) GetDescription() string {
+	return color.YellowString("A bruteforce attack on ssh servers")
+}
+
 func (command SshBruteForceCommand) String() string {
 	return "<Command 'sshBruteForce'>"
 }
 
 func (command SshBruteForceCommand) Execute(kill chan bool, args []string) {
+	/*
+		This command is not working. fix it please
+	*/
 
 	if len(args) < 2 {
 		fmt.Fprintln(color.Output, color.RedString("Usage: <address> <user>"))
@@ -57,7 +65,7 @@ func (command SshBruteForceCommand) Execute(kill chan bool, args []string) {
 
 var numberOfChans = runtime.NumCPU()*2 + 1
 
-func trySSHConnection(address string, user string, pass string) (bool) {
+func trySSHConnection(address string, user string, pass string) bool {
 	config := &ssh.ClientConfig{
 		User: user,
 		Auth: []ssh.AuthMethod{
@@ -68,7 +76,7 @@ func trySSHConnection(address string, user string, pass string) (bool) {
 		},
 	}
 
-	client,  err := ssh.Dial("tcp", address, config)
+	client, err := ssh.Dial("tcp", address, config)
 	defer func() {
 		if client != nil {
 			client.Close()

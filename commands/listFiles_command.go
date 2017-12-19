@@ -19,6 +19,10 @@ func (command ListFilesCommand) GetName() string {
 	return "listFiles"
 }
 
+func (command ListFilesCommand) GetDescription() string {
+	return "Lists files"
+}
+
 func (command ListFilesCommand) String() string {
 	return "<Command 'listFiles'>"
 }
