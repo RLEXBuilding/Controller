@@ -41,7 +41,7 @@ func (command PortScanCommand) Execute(kill chan bool, args []string) {
 	}
 
 	address := args[0]
-	from := 0
+	from := 1
 	to := 65535
 	var timeout = 2000 * time.Millisecond
 	if len(args) >= 3 {
