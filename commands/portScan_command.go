@@ -60,10 +60,11 @@ func (command PortScanCommand) Execute(kill chan bool, args []string) {
 	for port := from; port < to; port++ {
 		select {
 		case <-kill:
-			fmt.Println("Aborted.")
+			fmt.Println("\rAborted.")
 			return
 
 		default:
+			fmt.Printf("\rCurrent port: %5d", port)
 			if ps.IsOpen(port) {
 				fmt.Print(" ", port, " [open]")
 				fmt.Println("  -  ", ps.DescribePort(port))
