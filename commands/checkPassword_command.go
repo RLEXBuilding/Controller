@@ -108,8 +108,9 @@ func (command CheckPasswordCommand) Execute(kill chan bool, args []string) {
 				break
 			}
 			if breakScanner {
-				break
+				fmt.Printf("\r")
 				breakPasswordListLoop = true
+				break
 			}
 		}
 		if breakPasswordListLoop {
