@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/fatih/color"
 )
@@ -49,9 +50,33 @@ func (command CheckPasswordCommand) Execute(kill chan bool, args []string) {
 	} else if passwordLenght >= 4 {
 		passwordLenghtState = color.YellowString("Not so good")
 	}
-	fmt.Fprintf(color.Output, "Your password contains %d chars. Thats %4s\n", passwordLenght, passwordLenghtState)
-	// Please make here a table with char lenght and state and with numbers available, extra chars($!"§%&..) available etc. thank you
-	fmt.Fprintf(color.Output, "Password Lenght | %5d | %5s\n", passwordLenght, passwordLenghtState)
+	containsLetters := false
+	containsLettersState := color.YellowString("Bad")
+	if strings.ContainsAny(password, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz") {
+		containsLetters = true
+		containsLettersState = color.GreenString("Good")
+	}
+
+	containsNumbers := false
+	containsNumbersState := color.YellowString("Bad")
+	if strings.ContainsAny(password, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz") {
+		containsNumbers = true
+		containsNumbersState = color.GreenString("Good")
+	}
+
+	containsSpecialChars := false
+	containsSpecialCharsState := color.YellowString("Bad")
+	if strings.ContainsAny(password, "!\"§$%%&/()=?\\") {
+		containsSpecialChars = true
+		containsSpecialCharsState = color.GreenString("Good")
+	}
+
+	fmt.Fprintf(color.Output, "Password Lenght  | %5d | %5s\n", passwordLenght, passwordLenghtState)
+	fmt.Fprintf(color.Output, "Contains Letters | %5t | %5s\n", containsLetters, containsLettersState)
+	fmt.Fprintf(color.Output, "Contains Numbers | %5t | %5s\n", containsNumbers, containsNumbersState)
+	fmt.Fprintf(color.Output, "Contains Special Characters | %5t | %5s\n", containsSpecialChars, containsSpecialCharsState)
+	fmt.Println("\n")
+	breakPasswordListLoop := false
 	inPasswordList := false
 	for i, url := range passwordLists {
 		resp, err := http.Get(url)
@@ -79,13 +104,23 @@ func (command CheckPasswordCommand) Execute(kill chan bool, args []string) {
 			}
 			if breakScanner {
 				break
+				breakPasswordListLoop = true
 			}
 		}
+		if breakPasswordListLoop {
+			break
+		}
+
 		if err := scanner.Err(); err != nil {
 			fmt.Println("Error: " + err.Error())
 		}
-		if !inPasswordList {
-			fmt.Fprint(color.Output, "Your password is not in the password list: "+color.HiBlueString("Awesome"))
-		}
+
 	}
+	inPasswordListState := color.GreenString("Good")
+	if inPasswordList {
+		inPasswordListState = color.HiRedString("Very bad")
+	}
+
+	fmt.Fprintf(color.Output, "\rIn passwordList | %5t | %5s\n", inPasswordList, inPasswordListState)
+
 }
