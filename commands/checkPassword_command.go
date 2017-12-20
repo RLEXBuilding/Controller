@@ -8,7 +8,12 @@ import (
 	"github.com/fatih/color"
 )
 
-var passwordLists = []string{"https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/10_million_password_list_top_100000.txt"}
+var passwordLists = []string{
+	"https://raw.githubusercontent.com/danielmiessler/SecLists/blob/master/Passwords/10k_most_common.txt",
+	"https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/Lizard_Squad.txt",
+	"https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/10_million_password_list_top_100000.txt",
+	"https://raw.githubusercontent.com/danielmiessler/SecLists/blob/master/Passwords/10k_most_common.txt",
+}
 
 type CheckPasswordCommand struct {
 	name string
