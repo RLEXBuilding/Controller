@@ -28,6 +28,7 @@ func InitializeCommands() {
 	commands = append(commands, new(PortScanCommand))
 	commands = append(commands, new(SshBruteForceCommand))
 	commands = append(commands, new(ListFilesCommand))
+	commands = append(commands, new(CheckPasswordCommand))
 	commands = append(commands, new(HackImitateCommand))
 }
 
