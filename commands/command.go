@@ -32,8 +32,7 @@ func InitializeCommands() {
 	commands = append(commands, new(HackImitateCommand))
 }
 
-func RunCommand(cmd string) {
-	args := strings.Split(strings.TrimSpace(cmd), " ")
+func RunCommand(args []string) {
 	element := getElementByString(args[0])
 	if element == nil {
 		fmt.Fprintln(color.Output, "Cannot resolve this command. Type "+color.YellowString("help")+" for a help gui")

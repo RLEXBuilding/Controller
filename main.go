@@ -7,6 +7,7 @@ import (
 	"runtime"
 
 	"github.com/RLEXBuilding/Controller/commands"
+	"github.com/RLEXBuilding/Controller/util"
 	"github.com/fatih/color"
 )
 
@@ -20,11 +21,30 @@ func main() {
 	fmt.Println()
 	reader := bufio.NewReader(os.Stdin)
 	for true {
+	OUTER:
 		fmt.Fprint(color.Output, color.GreenString("> "))
 		text, err := reader.ReadString('\n')
 		if err != nil {
 			fmt.Fprintln(color.Output, err)
+			continue
 		}
-		commands.RunCommand(text)
+		arr, finished, err := util.ParseQuotes(text)
+		if err != nil {
+			fmt.Print(err)
+			continue
+		}
+		for !finished {
+			nl, err := reader.ReadString('\n')
+			if err != nil {
+				fmt.Fprintln(color.Output, err)
+				goto OUTER
+			}
+			text = text + nl
+			arr, finished, err = util.ParseQuotes(text)
+		}
+		if len(arr) == 0 {
+			continue
+		}
+		commands.RunCommand(arr)
 	}
 }
