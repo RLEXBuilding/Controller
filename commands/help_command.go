@@ -23,13 +23,18 @@ func (command HelpCommand) String() string {
 }
 
 func (command HelpCommand) Execute(kill chan bool, args []string) {
-	fmt.Println("--- Help ---")
+	fmt.Println("+--- Help ---+")
 	explanation := color.YellowString("\u2588"+" = Could be illegal") + " | "
 	explanation += color.RedString("\u2588"+" = No Permission") + " | "
 	explanation += color.CyanString("\u2588" + " = Currently not working")
 
 	fmt.Fprintln(color.Output, explanation)
 	fmt.Println("------------")
+
+	fmt.Println("\t-- Key Shortcuts --")
+	fmt.Println("^C | Abort current command")
+	fmt.Println("\t--   Commands    --")
+
 	for _, element := range commands {
 		fmt.Fprintln(color.Output, element.GetName()+" | "+element.GetDescription())
 	}
