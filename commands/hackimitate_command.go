@@ -21,7 +21,7 @@ func (command HackImitateCommand) GetName() string {
 }
 
 func (command HackImitateCommand) GetDescription() string {
-	return "Imitates a screen, which prints deletions"
+	return "Imitates a screen, which prints deletions(it's a fun command)"
 }
 
 func (command HackImitateCommand) String() string {
