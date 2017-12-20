@@ -50,7 +50,7 @@ func (command CheckPasswordCommand) Execute(kill chan bool, args []string) {
 		passwordLenghtState = color.YellowString("Not so good")
 	}
 	fmt.Fprintf(color.Output, "Your password contains %d chars. Thats %4s\n", passwordLenght, passwordLenghtState)
-
+	// Please make here a table with char lenght and state and with numbers available, extra chars($!"§%&..) available etc. thank you
 	inPasswordList := false
 	for i, url := range passwordLists {
 		resp, err := http.Get(url)
