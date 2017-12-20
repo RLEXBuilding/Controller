@@ -1,8 +1,7 @@
 ###########################
 # Makefile for Controller #
 ###########################
-buildExecutable: 
-  $(shell go build -o "out/Controller.exe") \
-  $(shell exit 0)
-.PHONY: all
+buildExecutable:
+	go build -o "out/Controller.exe"
+.PHONY: all buildExecutable
 all: buildExecutable
