@@ -33,6 +33,11 @@ func (command CheckPasswordCommand) String() string {
 }
 
 func (command CheckPasswordCommand) Execute(kill chan bool, args []string) {
+	if len(args) < 1 {
+		fmt.Println("Where is my PASSWORD, i need it, i love it, please give me it.")
+		return
+	}
+
 	fmt.Println("Started checking")
 	password := args[0]
 	passwordLenght := len(password)
