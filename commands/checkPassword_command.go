@@ -99,7 +99,7 @@ func (command CheckPasswordCommand) Execute(kill chan bool, args []string) {
 				fmt.Println("\rAborted.")
 				return
 			default:
-				fmt.Fprintf(color.Output, "\rCurrent word: %s", color.CyanString(scanner.Text()))
+				fmt.Fprintf(color.Output, "\rCurrent word: %s\t\t\t\t\t", color.CyanString(scanner.Text()))
 				if scanner.Text() == password {
 					fmt.Printf("\rYour password is insecure, because it's in a password list from us. Its the %d. password of the %d. list in %s\n", i2, i+1, url)
 					inPasswordList = true
@@ -113,6 +113,7 @@ func (command CheckPasswordCommand) Execute(kill chan bool, args []string) {
 				break
 			}
 		}
+		fmt.Println("\r\t\t\t\t\t\t\t\t\t\t") // Very bad method to clear the line
 		if breakPasswordListLoop {
 			break
 		}
@@ -126,7 +127,7 @@ func (command CheckPasswordCommand) Execute(kill chan bool, args []string) {
 	if inPasswordList {
 		inPasswordListState = color.HiRedString("Very bad")
 	}
-
+	fmt.Println("\t\t\t\t\t\t\t\t\t\t\t\t\t") // Very bad method to fix the \r bug(i want to clear the line) TODO: Better idea :)
 	fmt.Fprintf(color.Output, "\rIn passwordList | %5t | %5s\n", inPasswordList, inPasswordListState)
 
 }
