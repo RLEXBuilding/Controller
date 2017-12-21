@@ -10,7 +10,7 @@ import (
 
 	"github.com/anvie/port-scanner"
 	"github.com/fatih/color"
-	"github.com/ngirot/BruteForce/bruteforce/words"
+	words "github.com/ngirot/BruteForce/bruteforce/words"
 	"golang.org/x/crypto/ssh"
 )
 
