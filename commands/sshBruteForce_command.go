@@ -8,9 +8,10 @@ import (
 	"strings"
 	"time"
 
+	"github.com/ngirot/BruteForce/bruteforce/words"
+
 	"github.com/anvie/port-scanner"
 	"github.com/fatih/color"
-	words "github.com/ngirot/BruteForce/bruteforce/words"
 	"golang.org/x/crypto/ssh"
 )
 
@@ -65,7 +66,8 @@ func (command SshBruteForceCommand) Execute(kill chan bool, args []string) {
 
 	var tries = 0
 
-	var worder = words.NewWorder(words.DefaultAlphabet(), numberOfChans, 0)
+	var worder = words.NewWorderAlphabet(words.DefaultAlphabet(), numberOfChans, 0)
+
 	for {
 		select {
 		case <-kill:
