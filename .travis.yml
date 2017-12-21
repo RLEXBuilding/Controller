@@ -8,7 +8,7 @@ go:
   - master
 sudo: false
 before_script:
-  - go get ./...
+  - go get -t -v ./...
 script:
   - go build
 install:
