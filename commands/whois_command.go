@@ -28,18 +28,12 @@ func (command WhoisCommand) Execute(kill chan bool, args []string) {
 		Please add sysadmin etc. to this domain whois.
 		And please add a ip whois
 	*/
-
-	if len(args) < 2 {
-		fmt.Println(fmt.Sprintf("usage:\n\t%s domain [server]", args[0]))
+	if len(args) != 2 {
+		fmt.Println("whois domain <address>")
 		return
 	}
 
-	var server string
-	if len(args) > 2 {
-		server = args[2]
-	}
-
-	result, err := whois.Whois(args[1], server)
+	result, err := whois.Whois(args[1])
 	if err != nil {
 		fmt.Println(err.Error())
 	}
