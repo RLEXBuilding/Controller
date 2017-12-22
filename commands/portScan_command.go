@@ -95,7 +95,7 @@ func (command PortScanCommand) Execute(kill chan bool, args []string) {
 			progressBar += "] " + strconv.FormatFloat(progressBarPercent, 'f', 1, 64)
 			fmt.Fprintf(color.Output, "\rCurrent port: %5d %s", port, progressBar+string('\u0025'))
 			if ps.IsOpen(port) {
-				fmt.Printf("\r %d [open]  -  %s\n", port, ps.DescribePort(port))
+				fmt.Printf("\r %d [open]  -  %s\t\t\t\t\n", port, ps.DescribePort(port))
 			}
 		}
 	}
