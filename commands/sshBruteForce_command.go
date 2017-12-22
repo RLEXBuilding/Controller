@@ -92,7 +92,7 @@ func trySSHConnection(address string, user string, pass string) (result bool, er
 	config := &ssh.ClientConfig{
 		User: user,
 		Auth: []ssh.AuthMethod{
-			ssh.Password(pass), // THIS HERE IS NOT WORKING!
+			ssh.Password(pass),
 		},
 		HostKeyCallback: func(hostname string, remote net.Addr, key ssh.PublicKey) error {
 			return nil
