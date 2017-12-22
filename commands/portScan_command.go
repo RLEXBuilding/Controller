@@ -9,14 +9,17 @@ import (
 	"github.com/fatih/color"
 )
 
+// PortScanCommand is a command for port scanning
 type PortScanCommand struct {
 	name string
 }
 
+// GetName returns the name of the command
 func (command PortScanCommand) GetName() string {
 	return "portscan"
 }
 
+// GetDescription returns the description of the command
 func (command PortScanCommand) GetDescription() string {
 	return color.YellowString("Scans a port range")
 }
@@ -25,6 +28,7 @@ func (command PortScanCommand) String() string {
 	return "<Command 'portscan'>"
 }
 
+// Execute will call on command execute
 func (command PortScanCommand) Execute(kill chan bool, args []string) {
 	/*
 		This command is not finished. If you want to help:
@@ -36,7 +40,7 @@ func (command PortScanCommand) Execute(kill chan bool, args []string) {
 		  > "-asList" argument(should be displayed: 80,81)
 	*/
 	if len(args) < 1 {
-		fmt.Println("portscan <address> [port-from-inclusive] [port-to-exclusive] [timeout-in-milliseconds]")
+		fmt.Println("portscan <address> [port-from-inclusive] [port-to-exclusive] [timeout-in-milliseconds] [tcp|udp]")
 		return
 	}
 
@@ -95,7 +99,7 @@ func (command PortScanCommand) Execute(kill chan bool, args []string) {
 			progressBar += "] " + strconv.FormatFloat(progressBarPercent, 'f', 1, 64)
 			fmt.Fprintf(color.Output, "\rCurrent port: %5d %s", port, progressBar+string('\u0025'))
 			if ps.IsOpen(port) {
-				fmt.Printf("\r %d [open]  -  %s\t\t\t\t\n", port, ps.DescribePort(port))
+				fmt.Printf("\r %d [open]  -  %s\t\t\t\t\t\t\n", port, ps.DescribePort(port))
 			}
 		}
 	}
