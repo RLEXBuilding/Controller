@@ -66,7 +66,7 @@ func (command SshBruteForceCommand) Execute(kill chan bool, args []string) {
 
 	var tries = 0
 
-	var worder = words.NewWorderAlphabet(words.DefaultAlphabet(), numberOfChans, 0)
+	var worder = words.NewWorderAlphabet(words.DefaultAlphabet(), 1, 0)
 
 	for {
 		select {
@@ -81,7 +81,7 @@ func (command SshBruteForceCommand) Execute(kill chan bool, args []string) {
 				fmt.Printf("Success, your password is: %s\nTook %d tries\n", curPwd, tries)
 				return
 			}
-			fmt.Fprintf(color.Output, "\r\rTook "+color.HiCyanString("%d")+" tries without result. password: %s cuz: %s", tries, color.CyanString(curPwd), color.RedString(err.Error()))
+			fmt.Fprintf(color.Output, "\r\rTook "+color.HiCyanString("%d")+" tries without result. password: %s", tries, color.CyanString(curPwd))
 		}
 	}
 }
