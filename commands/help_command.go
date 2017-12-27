@@ -5,6 +5,8 @@ import (
 
 	"github.com/fatih/color"
 	"os/user"
+	"runtime"
+	"io/ioutil"
 )
 
 type HelpCommand struct {
@@ -42,7 +44,14 @@ func checkSU() bool {
 	if err != nil {
 		return false
 	}
-	return user == nil
+	if runtime.GOOS == "linux" && user.Uid == "0" && user.Gid == "0" {
+		return true
+	}
+	if runtime.GOOS == "windows" {
+		_, err := ioutil.ReadFile("C:\\Windows\\System32\\user32.dll")
+		return err != nil
+	}
+	return false
 }
 
 func (HelpCommand) IsWIP() bool {

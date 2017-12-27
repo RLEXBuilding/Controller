@@ -25,25 +25,23 @@ func main() {
 		fmt.Fprint(color.Output, color.GreenString("> "))
 		text, err := reader.ReadString('\n')
 		if err != nil {
-			fmt.Fprintln(color.Output, err)
-			continue
+			return
 		}
 		arr, finished, err := util.ParseQuotes(text)
 		if err != nil {
-			fmt.Print(err)
-			continue
+			fmt.Println(err)
+			goto OUTER
 		}
 		for !finished {
 			nl, err := reader.ReadString('\n')
 			if err != nil {
-				fmt.Fprintln(color.Output, err)
-				goto OUTER
+				return
 			}
 			text = text + nl
 			arr, finished, err = util.ParseQuotes(text)
 		}
 		if len(arr) == 0 {
-			continue
+			goto OUTER
 		}
 		commands.RunCommand(arr)
 	}
