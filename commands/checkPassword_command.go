@@ -64,7 +64,7 @@ func (command CheckPasswordCommand) Execute(kill chan bool, args []string) {
 
 	containsNumbers := false
 	containsNumbersState := color.YellowString("Bad")
-	if strings.ContainsAny(password, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz") {
+	if strings.ContainsAny(password, "0123456789") {
 		containsNumbers = true
 		containsNumbersState = color.GreenString("Good")
 	}
