@@ -24,13 +24,22 @@ func (command SshBruteForceCommand) GetName() string {
 }
 
 func (command SshBruteForceCommand) GetDescription() string {
-	return color.YellowString("A bruteforce attack on ssh servers")
+	return "A bruteforce attack on ssh servers"
 }
 
 func (command SshBruteForceCommand) String() string {
 	return "<Command 'sshBruteForce'>"
 }
 
+func (SshBruteForceCommand) IsWIP() bool {
+	return false
+}
+func (SshBruteForceCommand) IsIllegal() bool {
+	return true
+}
+func (SshBruteForceCommand) RequiresSU() bool {
+	return false
+}
 func (command SshBruteForceCommand) Execute(kill chan bool, args []string) {
 	/*
 		This command is not working. fix it please
@@ -75,7 +84,7 @@ func (command SshBruteForceCommand) Execute(kill chan bool, args []string) {
 			return
 		default:
 			var curPwd = worder.Next()
-			result, err := trySSHConnection(address, user, curPwd)
+			result, _ := trySSHConnection(address, user, curPwd)
 			tries++
 			if !result {
 				fmt.Printf("Success, your password is: %s\nTook %d tries\n", curPwd, tries)

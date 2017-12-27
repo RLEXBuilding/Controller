@@ -15,6 +15,15 @@ func (command EchoCommand) GetName() string {
 	return "echo"
 }
 
+func (EchoCommand) IsWIP() bool {
+	return false
+}
+func (EchoCommand) IsIllegal() bool {
+	return false
+}
+func (EchoCommand) RequiresSU() bool {
+	return false
+}
 func (command EchoCommand) GetDescription() string {
 	return "Prints a string"
 }

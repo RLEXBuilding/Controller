@@ -19,8 +19,17 @@ func (command WgetCommand) GetName() string {
 	return "wget"
 }
 
+func (WgetCommand) IsWIP() bool {
+	return true
+}
+func (WgetCommand) IsIllegal() bool {
+	return false
+}
+func (WgetCommand) RequiresSU() bool {
+	return false
+}
 func (command WgetCommand) GetDescription() string {
-	return color.CyanString("Downloads a file")
+	return "Downloads a file"
 }
 
 func (command WgetCommand) String() string {

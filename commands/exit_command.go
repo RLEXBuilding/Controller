@@ -3,7 +3,6 @@ package commands
 import (
 	"fmt"
 	"os"
-	"time"
 )
 
 type ExitCommand struct {
@@ -21,9 +20,16 @@ func (command ExitCommand) GetDescription() string {
 func (command ExitCommand) String() string {
 	return "<Command 'exit'>"
 }
-
+func (ExitCommand) IsWIP() bool {
+	return false
+}
+func (ExitCommand) IsIllegal() bool {
+	return false
+}
+func (ExitCommand) RequiresSU() bool {
+	return false
+}
 func (command ExitCommand) Execute(kill chan bool, args []string) {
 	fmt.Println("See You later Alligator")
-	time.Sleep(2 * time.Second)
 	os.Exit(0)
 }
