@@ -2,8 +2,9 @@ package commands
 
 import (
 	"fmt"
+	"strings"
 
-	"github.com/likexian/whois-go"
+	whois "github.com/undiabler/golang-whois"
 )
 
 type WhoisCommand struct {
@@ -28,21 +29,22 @@ func (command WhoisCommand) Execute(kill chan bool, args []string) {
 		Please add sysadmin etc. to this domain whois.
 		And please add a ip whois
 	*/
-
-	if len(args) < 2 {
-		fmt.Println(fmt.Sprintf("usage:\n\t%s domain [server]", args[0]))
+	if len(args) != 2 {
+		fmt.Println("Usage: whois domain|ip <address>")
 		return
 	}
+	if strings.EqualFold(args[0], "domain") {
+		result, err := whois.GetWhois(args[1])
 
-	var server string
-	if len(args) > 2 {
-		server = args[2]
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+
+		fmt.Println(result)
+	} else if strings.EqualFold(args[0], "ip") {
+		fmt.Println("Not implemented")
+	} else {
+		fmt.Println("Usage: domain|ip <address>")
 	}
 
-	result, err := whois.Whois(args[1], server)
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-
-	fmt.Println(result)
 }

@@ -1,8 +1,8 @@
 package util
 
 import (
-	"unicode"
 	"strings"
+	"unicode"
 )
 
 type IllegalEscapeSequence struct {
@@ -83,7 +83,7 @@ func ParseQuotes(txt string) (result []string, finished bool, error error) {
 }
 
 const (
-	// String rune is the rune of the string
+	// StringRune is the rune of the string
 	StringRune = '"'
 )
 

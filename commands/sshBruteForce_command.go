@@ -8,9 +8,10 @@ import (
 	"strings"
 	"time"
 
+	"github.com/ngirot/BruteForce/bruteforce/words"
+
 	"github.com/anvie/port-scanner"
 	"github.com/fatih/color"
-	"github.com/ngirot/BruteForce/bruteforce/words"
 	"golang.org/x/crypto/ssh"
 )
 
@@ -65,7 +66,8 @@ func (command SshBruteForceCommand) Execute(kill chan bool, args []string) {
 
 	var tries = 0
 
-	var worder = words.NewWorder(words.DefaultAlphabet(), numberOfChans, 0)
+	var worder = words.NewWorderAlphabet(words.DefaultAlphabet(), 1, 0)
+
 	for {
 		select {
 		case <-kill:
@@ -79,7 +81,7 @@ func (command SshBruteForceCommand) Execute(kill chan bool, args []string) {
 				fmt.Printf("Success, your password is: %s\nTook %d tries\n", curPwd, tries)
 				return
 			}
-			fmt.Fprintf(color.Output, "\r\rTook "+color.HiCyanString("%d")+" tries without result. password: %s cuz: %s", tries, color.CyanString(curPwd), color.RedString(err.Error()))
+			fmt.Fprintf(color.Output, "\r\rTook "+color.HiCyanString("%d")+" tries without result. password: %s", tries, color.CyanString(curPwd))
 		}
 	}
 }
@@ -90,7 +92,7 @@ func trySSHConnection(address string, user string, pass string) (result bool, er
 	config := &ssh.ClientConfig{
 		User: user,
 		Auth: []ssh.AuthMethod{
-			ssh.Password(pass), // THIS HERE IS NOT WORKING!
+			ssh.Password(pass),
 		},
 		HostKeyCallback: func(hostname string, remote net.Addr, key ssh.PublicKey) error {
 			return nil

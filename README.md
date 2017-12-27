@@ -5,7 +5,9 @@ This project named controller, because it should control all things.
 The programming language is [Go](https://golang.org/)
 
 ## Clone this project
-If you want to clone this project use ```go get "github.com/RLEXBuilding/Controller" && cd "%GOPATH%/github.com/RLEXBuilding/Controller"```
+If you want to clone this project use ```go get "github.com/RLEXBuilding/Controller" && cd "$GOPATH/github.com/RLEXBuilding/Controller"```
+If you use windows, you must replace *$GOPATH* with your path where,
+your go dir is :P
 
 ## Build
 If you want to build this project please use ```make``` instead of ```go build```
