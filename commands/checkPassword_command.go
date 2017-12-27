@@ -32,6 +32,15 @@ func (command CheckPasswordCommand) String() string {
 	return "<Command 'checkpassword'>"
 }
 
+func (CheckPasswordCommand) IsWIP() bool {
+	return false
+}
+func (CheckPasswordCommand) IsIllegal() bool {
+	return false
+}
+func (CheckPasswordCommand) RequiresSU() bool {
+	return false
+}
 func (command CheckPasswordCommand) Execute(kill chan bool, args []string) {
 	if len(args) < 1 {
 		fmt.Println("Usage: checkpassword <password>")
@@ -64,7 +73,7 @@ func (command CheckPasswordCommand) Execute(kill chan bool, args []string) {
 
 	containsNumbers := false
 	containsNumbersState := color.YellowString("Bad")
-	if strings.ContainsAny(password, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz") {
+	if strings.ContainsAny(password, "0123456789") {
 		containsNumbers = true
 		containsNumbersState = color.GreenString("Good")
 	}

@@ -19,9 +19,19 @@ func (command PortScanCommand) GetName() string {
 	return "portscan"
 }
 
+func (PortScanCommand) IsWIP() bool {
+	return false
+}
+func (PortScanCommand) IsIllegal() bool {
+	return true
+}
+func (PortScanCommand) RequiresSU() bool {
+	return false
+}
+
 // GetDescription returns the description of the command
 func (command PortScanCommand) GetDescription() string {
-	return color.YellowString("Scans a port range")
+	return "Scans a port range"
 }
 
 func (command PortScanCommand) String() string {

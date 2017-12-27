@@ -18,6 +18,15 @@ type ListFilesCommand struct {
 func (command ListFilesCommand) GetName() string {
 	return "listFiles"
 }
+func (ListFilesCommand) IsWIP() bool {
+	return false
+}
+func (ListFilesCommand) IsIllegal() bool {
+	return false
+}
+func (ListFilesCommand) RequiresSU() bool {
+	return false
+}
 
 func (command ListFilesCommand) GetDescription() string {
 	return "Lists files"

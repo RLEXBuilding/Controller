@@ -13,6 +13,15 @@ type ShellCommand struct {
 func (command ShellCommand) GetName() string {
 	return "shell"
 }
+func (ShellCommand) IsWIP() bool {
+	return false
+}
+func (ShellCommand) IsIllegal() bool {
+	return false
+}
+func (ShellCommand) RequiresSU() bool {
+	return false
+}
 
 func (command ShellCommand) GetDescription() string {
 	return "Executes a shell command"

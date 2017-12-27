@@ -14,6 +14,9 @@ type Command interface {
 	GetName() string
 	GetDescription() string
 	Execute(kill chan bool, args []string)
+	IsWIP() bool
+	IsIllegal() bool
+	RequiresSU() bool
 }
 
 var commands []Command

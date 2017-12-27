@@ -4,6 +4,9 @@ import (
 	"fmt"
 
 	"github.com/fatih/color"
+	"os/user"
+	"runtime"
+	"io/ioutil"
 )
 
 type HelpCommand struct {
@@ -22,20 +25,63 @@ func (command HelpCommand) String() string {
 	return "<Command 'help'>"
 }
 
+func buildBadges(cmd Command) string {
+	badges := ""
+	if cmd.IsWIP() {
+		badges += color.CyanString("[WIP]")
+	}
+	if cmd.IsIllegal() {
+		badges += color.YellowString("[ILLEGAL]")
+	}
+	if cmd.RequiresSU() {
+		badges += color.RedString("[SU]")
+	}
+	return badges
+}
+
+func checkSU() bool {
+	user, err := user.Current()
+	if err != nil {
+		return false
+	}
+	if runtime.GOOS == "linux" && user.Uid == "0" && user.Gid == "0" {
+		return true
+	}
+	if runtime.GOOS == "windows" {
+		_, err := ioutil.ReadFile("C:\\Windows\\System32\\user32.dll")
+		return err != nil
+	}
+	return false
+}
+
+func (HelpCommand) IsWIP() bool {
+	return false
+}
+func (HelpCommand) IsIllegal() bool {
+	return false
+}
+func (HelpCommand) RequiresSU() bool {
+	return false
+}
 func (command HelpCommand) Execute(kill chan bool, args []string) {
-	fmt.Println("+--- Help ---+")
-	explanation := color.YellowString("\u2588"+" = Could be illegal") + " | "
-	explanation += color.RedString("\u2588"+" = No Permission") + " | "
-	explanation += color.CyanString("\u2588" + " = Currently not working")
-
-	fmt.Fprintln(color.Output, explanation)
-	fmt.Println("------------")
-
-	fmt.Println("\t-- Key Shortcuts --")
+	fmt.Println("+---     Help      ---+")
+	fmt.Fprintln(color.Output, color.YellowString("\u2588"+" = Could be illegal"))
+	fmt.Fprintln(color.Output, color.RedString("\u2588"+" = No Permission"))
+	fmt.Fprintln(color.Output, color.CyanString("\u2588"+" = WIP could be dysfunctional"))
+	fmt.Println("+--- Key Shortcuts ---+")
 	fmt.Println("^C | Abort current command")
-	fmt.Println("\t--   Commands    --")
+	fmt.Println("+---   Commands    ---+")
 
 	for _, element := range commands {
-		fmt.Fprintln(color.Output, element.GetName()+" | "+element.GetDescription())
+		text := element.GetName() + buildBadges(element) + "|" + element.GetDescription()
+		if element.IsWIP() {
+			fmt.Fprintln(color.Output, color.CyanString(text))
+		} else if element.IsIllegal() {
+			fmt.Fprintln(color.Output, color.YellowString(text))
+		} else if element.RequiresSU() && !checkSU() {
+			fmt.Fprintln(color.Output, color.RedString(text))
+		} else {
+			fmt.Println(element.GetName() + " | " + element.GetDescription())
+		}
 	}
 }

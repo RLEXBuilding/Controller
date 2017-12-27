@@ -20,6 +20,15 @@ func (command HackImitateCommand) GetName() string {
 	return "hackimitate"
 }
 
+func (HackImitateCommand) IsWIP() bool {
+	return false
+}
+func (HackImitateCommand) IsIllegal() bool {
+	return false
+}
+func (HackImitateCommand) RequiresSU() bool {
+	return false
+}
 func (command HackImitateCommand) GetDescription() string {
 	return "Imitates a screen, which prints deletions(it's a fun command)"
 }
