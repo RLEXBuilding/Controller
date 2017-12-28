@@ -22,9 +22,7 @@ func (command PortScanCommand) GetName() string {
 func (PortScanCommand) IsWIP() bool {
 	return false
 }
-func (PortScanCommand) IsIllegal() bool {
-	return true
-}
+
 func (PortScanCommand) RequiresSU() bool {
 	return false
 }

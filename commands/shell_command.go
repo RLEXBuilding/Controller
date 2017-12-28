@@ -16,9 +16,6 @@ func (command ShellCommand) GetName() string {
 func (ShellCommand) IsWIP() bool {
 	return false
 }
-func (ShellCommand) IsIllegal() bool {
-	return false
-}
 func (ShellCommand) RequiresSU() bool {
 	return false
 }

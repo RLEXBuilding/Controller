@@ -22,9 +22,6 @@ func (command WgetCommand) GetName() string {
 func (WgetCommand) IsWIP() bool {
 	return true
 }
-func (WgetCommand) IsIllegal() bool {
-	return false
-}
 func (WgetCommand) RequiresSU() bool {
 	return false
 }

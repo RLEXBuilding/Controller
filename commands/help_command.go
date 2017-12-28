@@ -28,20 +28,6 @@ func (command HelpCommand) String() string {
 	return "<Command 'help'>"
 }
 
-func buildBadges(cmd Command) string {
-	badges := ""
-	if cmd.IsWIP() {
-		badges += color.CyanString("[WIP]")
-	}
-	if cmd.IsIllegal() {
-		badges += color.YellowString("[ILLEGAL]")
-	}
-	if cmd.RequiresSU() {
-		badges += color.RedString("[SU]")
-	}
-	return badges
-}
-
 func checkSU() bool {
 	user, err := user.Current()
 	if err != nil {
@@ -68,7 +54,6 @@ func (HelpCommand) RequiresSU() bool {
 }
 func (command HelpCommand) Execute(kill chan bool, args []string) {
 	fmt.Println("+---     Help      ---+")
-	fmt.Fprintln(color.Output, color.YellowString("\u2588"+" = Could be illegal"))
 	fmt.Fprintln(color.Output, color.RedString("\u2588"+" = No Permission"))
 	fmt.Fprintln(color.Output, color.CyanString("\u2588"+" = WIP could be dysfunctional"))
 	fmt.Println("+--- Key Shortcuts ---+")
@@ -76,11 +61,9 @@ func (command HelpCommand) Execute(kill chan bool, args []string) {
 	fmt.Println("+---   Commands    ---+")
 
 	for _, element := range commands {
-		text := element.GetName() + buildBadges(element) + "|" + element.GetDescription()
+		text := element.GetName() + " | " + element.GetDescription()
 		if element.IsWIP() {
 			fmt.Fprintln(color.Output, color.CyanString(text))
-		} else if element.IsIllegal() {
-			fmt.Fprintln(color.Output, color.YellowString(text))
 		} else if element.RequiresSU() && !checkSU() {
 			fmt.Fprintln(color.Output, color.RedString(text))
 		} else {
