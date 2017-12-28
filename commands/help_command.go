@@ -3,12 +3,15 @@ package commands
 import (
 	"fmt"
 
-	"github.com/fatih/color"
+	"io/ioutil"
+	"os"
 	"os/user"
 	"runtime"
-	"io/ioutil"
+
+	"github.com/fatih/color"
 )
 
+// HelpCommand is a command which shows a help ui
 type HelpCommand struct {
 	name string
 }
@@ -48,7 +51,7 @@ func checkSU() bool {
 		return true
 	}
 	if runtime.GOOS == "windows" {
-		_, err := ioutil.ReadFile("C:\\Windows\\System32\\user32.dll")
+		_, err := ioutil.ReadFile(os.Getenv("SYSTEMROOT") + "\\" + "Windows\\System32\\user32.dll")
 		return err != nil
 	}
 	return false
