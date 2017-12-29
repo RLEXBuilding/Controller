@@ -10,10 +10,8 @@ import (
 type WhoisCommand struct {
 	name string
 }
+
 func (WhoisCommand) IsWIP() bool {
-	return false
-}
-func (WhoisCommand) IsIllegal() bool {
 	return false
 }
 func (WhoisCommand) RequiresSU() bool {

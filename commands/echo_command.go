@@ -18,9 +18,6 @@ func (command EchoCommand) GetName() string {
 func (EchoCommand) IsWIP() bool {
 	return false
 }
-func (EchoCommand) IsIllegal() bool {
-	return false
-}
 func (EchoCommand) RequiresSU() bool {
 	return false
 }

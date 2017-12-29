@@ -23,9 +23,6 @@ func (command HackImitateCommand) GetName() string {
 func (HackImitateCommand) IsWIP() bool {
 	return false
 }
-func (HackImitateCommand) IsIllegal() bool {
-	return false
-}
 func (HackImitateCommand) RequiresSU() bool {
 	return false
 }

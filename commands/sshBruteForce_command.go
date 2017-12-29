@@ -34,9 +34,6 @@ func (command SshBruteForceCommand) String() string {
 func (SshBruteForceCommand) IsWIP() bool {
 	return false
 }
-func (SshBruteForceCommand) IsIllegal() bool {
-	return true
-}
 func (SshBruteForceCommand) RequiresSU() bool {
 	return false
 }

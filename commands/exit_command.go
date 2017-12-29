@@ -23,9 +23,6 @@ func (command ExitCommand) String() string {
 func (ExitCommand) IsWIP() bool {
 	return false
 }
-func (ExitCommand) IsIllegal() bool {
-	return false
-}
 func (ExitCommand) RequiresSU() bool {
 	return false
 }

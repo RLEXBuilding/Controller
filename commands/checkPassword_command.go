@@ -35,9 +35,6 @@ func (command CheckPasswordCommand) String() string {
 func (CheckPasswordCommand) IsWIP() bool {
 	return false
 }
-func (CheckPasswordCommand) IsIllegal() bool {
-	return false
-}
 func (CheckPasswordCommand) RequiresSU() bool {
 	return false
 }

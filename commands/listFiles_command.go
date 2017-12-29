@@ -21,9 +21,6 @@ func (command ListFilesCommand) GetName() string {
 func (ListFilesCommand) IsWIP() bool {
 	return false
 }
-func (ListFilesCommand) IsIllegal() bool {
-	return false
-}
 func (ListFilesCommand) RequiresSU() bool {
 	return false
 }

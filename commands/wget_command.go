@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	netUrl "net/url"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/RLEXBuilding/Controller/util"
@@ -20,9 +22,6 @@ func (command WgetCommand) GetName() string {
 }
 
 func (WgetCommand) IsWIP() bool {
-	return true
-}
-func (WgetCommand) IsIllegal() bool {
 	return false
 }
 func (WgetCommand) RequiresSU() bool {
@@ -38,39 +37,35 @@ func (command WgetCommand) String() string {
 
 func (command WgetCommand) Execute(kill chan bool, args []string) {
 
-	/*
-	  The string detection with multiple strings don't work.
-	  Please fix this here
-	*/
-
-	fmt.Println("This command is disabled, because buggy")
-	return
-
-	url := ""
-	path := ""
-
-	urlStartIndex, urlEndIndex := util.DetectString(args)
-	url = strings.Join(args, " ")
-
-	if urlStartIndex != -1 || urlEndIndex != -1 {
-		url = string([]rune(url)[urlStartIndex+1 : urlEndIndex])
-	} else {
-		fmt.Println("Please give me a string in the char \"")
-		fmt.Println("Correct Syntax: " + "wget <url:string> <path:string>")
+	stringArr, finished, error := util.ParseQuotes(strings.Join(args, " "))
+	if error != nil {
+		fmt.Println("String parsing error: " + error.Error())
+		return
+	}
+	if !finished {
+		fmt.Println("String parsing not finished")
+		return
+	}
+	if len(stringArr) < 1 {
+		fmt.Println("We need 2 strings. You have " + strconv.Itoa(len(stringArr)))
+		return
+	}
+	url := stringArr[0]
+	u, err := netUrl.Parse(url)
+	if err != nil {
+		fmt.Println("Error while url parsing: " + err.Error())
+		return
+	}
+	localPath := strings.Replace(u.Path, "/", "", 0)
+	if strings.TrimSpace(localPath) == "" {
+		localPath = u.Host
+	}
+	if len(stringArr) == 2 {
+		localPath = stringArr[1]
 	}
 
-	pathArgs := strings.Split(strings.Replace(strings.Join(args, " "), url, "", 1), " ")
-	pathStartIndex, pathEndIndex := util.DetectString(pathArgs)
-	path = strings.Join(pathArgs, " ")
-
-	if pathStartIndex != -1 || pathEndIndex != -1 {
-		path = string([]rune(url)[pathStartIndex+1 : pathEndIndex])
-	} else {
-		fmt.Println("Please give me a string in the char \"")
-	}
-
-	fmt.Fprintln(color.Output, "Started downloading from "+color.CyanString(url)+" to "+color.CyanString(path))
-	downloadFile(path, url)
+	fmt.Fprintln(color.Output, "Started downloading from "+color.CyanString(url)+" to "+color.CyanString(localPath))
+	downloadFile(localPath, url)
 
 }
 
