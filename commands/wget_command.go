@@ -36,21 +36,11 @@ func (command WgetCommand) String() string {
 }
 
 func (command WgetCommand) Execute(kill chan bool, args []string) {
-
-	stringArr, finished, error := util.ParseQuotes(strings.Join(args, " "))
-	if error != nil {
-		fmt.Println("String parsing error: " + error.Error())
+	if len(args) < 1 {
+		fmt.Println("We need 2 strings. You have " + strconv.Itoa(len(args)))
 		return
 	}
-	if !finished {
-		fmt.Println("String parsing not finished")
-		return
-	}
-	if len(stringArr) < 1 {
-		fmt.Println("We need 2 strings. You have " + strconv.Itoa(len(stringArr)))
-		return
-	}
-	url := stringArr[0]
+	url := args[0]
 	u, err := netUrl.Parse(url)
 	if err != nil {
 		fmt.Println("Error while url parsing: " + err.Error())
@@ -60,8 +50,8 @@ func (command WgetCommand) Execute(kill chan bool, args []string) {
 	if strings.TrimSpace(localPath) == "" {
 		localPath = u.Host
 	}
-	if len(stringArr) == 2 {
-		localPath = stringArr[1]
+	if len(args) == 2 {
+		localPath = args[1]
 	}
 
 	fmt.Fprintln(color.Output, "Started downloading from "+color.CyanString(url)+" to "+color.CyanString(localPath))
