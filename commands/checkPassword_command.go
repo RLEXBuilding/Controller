@@ -16,14 +16,17 @@ var passwordLists = []string{
 	"https://raw.githubusercontent.com/danielmiessler/SecLists/blob/master/Passwords/10k_most_common.txt",
 }
 
+// CheckPasswordCommand is a command which checks your password security out of password lists and more
 type CheckPasswordCommand struct {
 	name string
 }
 
+// GetName is the function, which returns the name of the command
 func (command CheckPasswordCommand) GetName() string {
 	return "checkpassword"
 }
 
+// GetDescription is the function, which returns the description
 func (command CheckPasswordCommand) GetDescription() string {
 	return "Checks your passwords in hundred of password lists"
 }
@@ -32,12 +35,17 @@ func (command CheckPasswordCommand) String() string {
 	return "<Command 'checkpassword'>"
 }
 
+// IsWIP is a function which returns the state which defines if the command is unfinished developed
 func (CheckPasswordCommand) IsWIP() bool {
 	return false
 }
+
+// RequiresSU is the function which returns if the command needs administrator access
 func (CheckPasswordCommand) RequiresSU() bool {
 	return false
 }
+
+// Execute is a function, which executes the command
 func (command CheckPasswordCommand) Execute(kill chan bool, args []string) {
 	if len(args) < 1 {
 		fmt.Println("Usage: checkpassword <password>")
@@ -86,7 +94,7 @@ func (command CheckPasswordCommand) Execute(kill chan bool, args []string) {
 	fmt.Fprintf(color.Output, "Contains Letters | %5t | %5s\n", containsLetters, containsLettersState)
 	fmt.Fprintf(color.Output, "Contains Numbers | %5t | %5s\n", containsNumbers, containsNumbersState)
 	fmt.Fprintf(color.Output, "Contains Special Characters | %5t | %5s\n", containsSpecialChars, containsSpecialCharsState)
-	fmt.Println("\n")
+	fmt.Print("\n\n")
 	breakPasswordListLoop := false
 	inPasswordList := false
 	for i, url := range passwordLists {

@@ -16,10 +16,12 @@ type HelpCommand struct {
 	name string
 }
 
+// GetName returns the name of the command
 func (command HelpCommand) GetName() string {
 	return "help"
 }
 
+// GetDescription returns the description of the command
 func (command HelpCommand) GetDescription() string {
 	return "Shows a help ui"
 }
@@ -43,15 +45,17 @@ func checkSU() bool {
 	return false
 }
 
+// IsWIP is a function which returns the state which defines if the command is unfinished developed
 func (HelpCommand) IsWIP() bool {
 	return false
 }
-func (HelpCommand) IsIllegal() bool {
-	return false
-}
+
+// RequiresSU is the function which returns if the command needs administrator access
 func (HelpCommand) RequiresSU() bool {
 	return false
 }
+
+// Execute is the function which executes the command
 func (command HelpCommand) Execute(kill chan bool, args []string) {
 	fmt.Println("+---     Help      ---+")
 	fmt.Fprintln(color.Output, color.RedString("\u2588"+" = No Permission"))

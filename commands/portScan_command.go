@@ -19,17 +19,19 @@ func (command PortScanCommand) GetName() string {
 	return "portscan"
 }
 
+// GetDescription returns the description of the command
+func (command PortScanCommand) GetDescription() string {
+	return "Scans a port range"
+}
+
+// IsWIP is a function which returns the state which defines if the command is unfinished developed
 func (PortScanCommand) IsWIP() bool {
 	return false
 }
 
+// RequiresSU is the function which returns if the command needs administrator access
 func (PortScanCommand) RequiresSU() bool {
 	return false
-}
-
-// GetDescription returns the description of the command
-func (command PortScanCommand) GetDescription() string {
-	return "Scans a port range"
 }
 
 func (command PortScanCommand) String() string {
@@ -45,7 +47,7 @@ func (command PortScanCommand) Execute(kill chan bool, args []string) {
 		  > "-listClosed" argument
 		  > "-dontListOpened" argument
 		  > "-onlyList=open,closed" argument(or something like this)
-		  > "-asList" argument(should be displayed: 80,81)
+		  > "-asList" argument(should be displayed: 80,81,...)
 	*/
 	if len(args) < 1 {
 		fmt.Println("portscan <address> [port-from-inclusive] [port-to-exclusive] [timeout-in-milliseconds] [tcp|udp]")

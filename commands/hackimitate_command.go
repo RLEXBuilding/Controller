@@ -12,28 +12,36 @@ import (
 	"github.com/fatih/color"
 )
 
+// HackImitateCommand is a funny command, which shows hacky things. But its FAKE
 type HackImitateCommand struct {
 	name string
 }
 
+// GetName is the function, which returns the name of the command
 func (command HackImitateCommand) GetName() string {
 	return "hackimitate"
 }
 
+// GetDescription is the function, which returns the description of the command
+func (command HackImitateCommand) GetDescription() string {
+	return "Imitates a screen, which prints deletions(it's a fun command)"
+}
+
+// IsWIP is a function which returns the state which defines if the command is unfinished developed
 func (HackImitateCommand) IsWIP() bool {
 	return false
 }
+
+// RequiresSU is the function which returns if the command needs administrator access
 func (HackImitateCommand) RequiresSU() bool {
 	return false
-}
-func (command HackImitateCommand) GetDescription() string {
-	return "Imitates a screen, which prints deletions(it's a fun command)"
 }
 
 func (command HackImitateCommand) String() string {
 	return "<Command 'hackimitate'>"
 }
 
+// Execute is the function, which executes the command
 func (command HackImitateCommand) Execute(kill chan bool, args []string) {
 	fmt.Println("Its " + strconv.Itoa(time.Now().Day()) + "." + time.Now().Month().String() + "." + strconv.Itoa(time.Now().Year()))
 	time.Sleep(1 * time.Second)

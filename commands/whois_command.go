@@ -7,29 +7,36 @@ import (
 	whois "github.com/undiabler/golang-whois"
 )
 
+// WhoisCommand is a command, which gives you some data about domains
 type WhoisCommand struct {
 	name string
 }
 
-func (WhoisCommand) IsWIP() bool {
-	return false
-}
-func (WhoisCommand) RequiresSU() bool {
-	return false
-}
-
+// GetName is the function which returns the name of the command
 func (command WhoisCommand) GetName() string {
 	return "whois"
 }
 
+// GetDescription returns the description of the command
 func (command WhoisCommand) GetDescription() string {
 	return "Domain Whois"
+}
+
+// IsWIP is a function which returns the state which defines if the command is unfinished developed
+func (WhoisCommand) IsWIP() bool {
+	return false
+}
+
+// RequiresSU is the function which returns if the command needs administrator access
+func (WhoisCommand) RequiresSU() bool {
+	return false
 }
 
 func (command WhoisCommand) String() string {
 	return "<Command 'whois'>"
 }
 
+// Execute is a function which executes the command
 func (command WhoisCommand) Execute(kill chan bool, args []string) {
 	/*
 		This command is unfinished.

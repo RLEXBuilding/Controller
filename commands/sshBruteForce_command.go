@@ -15,29 +15,37 @@ import (
 	"golang.org/x/crypto/ssh"
 )
 
-type SshBruteForceCommand struct {
+// SSHBruteForceCommand is a command, which try infinity passwords on an ssh server. But this took very long.
+type SSHBruteForceCommand struct {
 	name string
 }
 
-func (command SshBruteForceCommand) GetName() string {
+// GetName returns the name of the command
+func (command SSHBruteForceCommand) GetName() string {
 	return "sshBruteForce"
 }
 
-func (command SshBruteForceCommand) GetDescription() string {
+// GetDescription returns the description of the command
+func (command SSHBruteForceCommand) GetDescription() string {
 	return "A bruteforce attack on ssh servers"
 }
 
-func (command SshBruteForceCommand) String() string {
+func (command SSHBruteForceCommand) String() string {
 	return "<Command 'sshBruteForce'>"
 }
 
-func (SshBruteForceCommand) IsWIP() bool {
+// IsWIP is a function which returns the state which defines if the command is unfinished developed
+func (SSHBruteForceCommand) IsWIP() bool {
 	return false
 }
-func (SshBruteForceCommand) RequiresSU() bool {
+
+// RequiresSU is the function which returns if the command needs administrator access
+func (SSHBruteForceCommand) RequiresSU() bool {
 	return false
 }
-func (command SshBruteForceCommand) Execute(kill chan bool, args []string) {
+
+// Execute is a function which executes the sshBruteForce command
+func (command SSHBruteForceCommand) Execute(kill chan bool, args []string) {
 	if len(args) < 2 {
 		fmt.Fprintln(color.Output, color.RedString("Usage: <address:port> <user>"))
 		return

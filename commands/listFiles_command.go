@@ -11,28 +11,36 @@ import (
 	"github.com/fatih/color"
 )
 
+// ListFilesCommand is a command which lists files
 type ListFilesCommand struct {
 	name string
 }
 
+// GetName is function which returns the name of the command
 func (command ListFilesCommand) GetName() string {
 	return "listFiles"
 }
+
+// GetDescription returns the description of the command
+func (command ListFilesCommand) GetDescription() string {
+	return "Lists files"
+}
+
+// IsWIP is a function which returns the state which defines if the command is unfinished developed
 func (ListFilesCommand) IsWIP() bool {
 	return false
 }
+
+// RequiresSU is the function which returns if the command needs administrator access
 func (ListFilesCommand) RequiresSU() bool {
 	return false
-}
-
-func (command ListFilesCommand) GetDescription() string {
-	return "Lists files"
 }
 
 func (command ListFilesCommand) String() string {
 	return "<Command 'listFiles'>"
 }
 
+// Execute is a function which executes the command
 func (command ListFilesCommand) Execute(kill chan bool, args []string) {
 	dir := ""
 	arguments := ""

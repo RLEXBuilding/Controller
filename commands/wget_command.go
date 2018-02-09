@@ -13,28 +13,36 @@ import (
 	"github.com/fatih/color"
 )
 
+// WgetCommand is a command which downloads a file to a specific path
 type WgetCommand struct {
 	name string
 }
 
+// GetName returns the name of the command
 func (command WgetCommand) GetName() string {
 	return "wget"
 }
 
+// GetDescription returns the description of the command
+func (command WgetCommand) GetDescription() string {
+	return "Downloads a file to a specific path"
+}
+
+// IsWIP is a function which returns the state which defines if the command is unfinished developed
 func (WgetCommand) IsWIP() bool {
 	return false
 }
+
+// RequiresSU is the function which returns if the command needs administrator access
 func (WgetCommand) RequiresSU() bool {
 	return false
-}
-func (command WgetCommand) GetDescription() string {
-	return "Downloads a file"
 }
 
 func (command WgetCommand) String() string {
 	return "<Command 'wget'>"
 }
 
+// Execute executes the wget command
 func (command WgetCommand) Execute(kill chan bool, args []string) {
 
 	stringArr, finished, error := util.ParseQuotes(strings.Join(args, " "))
