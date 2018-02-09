@@ -38,10 +38,6 @@ func (SshBruteForceCommand) RequiresSU() bool {
 	return false
 }
 func (command SshBruteForceCommand) Execute(kill chan bool, args []string) {
-	/*
-		This command is not working. fix it please
-	*/
-
 	if len(args) < 2 {
 		fmt.Fprintln(color.Output, color.RedString("Usage: <address:port> <user>"))
 		return
