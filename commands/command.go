@@ -10,6 +10,7 @@ import (
 	"github.com/fatih/color"
 )
 
+// Command is a type, which defines a command
 type Command interface {
 	GetName() string
 	GetDescription() string
@@ -20,6 +21,7 @@ type Command interface {
 
 var commands []Command
 
+// InitializeCommands is a function, which registers all commands
 func InitializeCommands() {
 	commands = append(commands, new(ExitCommand))
 	commands = append(commands, new(HelpCommand))
@@ -34,6 +36,7 @@ func InitializeCommands() {
 	commands = append(commands, new(HackImitateCommand))
 }
 
+// RunCommand is a function, which runs a command by arguments
 func RunCommand(args []string) {
 	element := getElementByString(args[0])
 	if element == nil {
@@ -43,6 +46,7 @@ func RunCommand(args []string) {
 	}
 }
 
+// RunCommandAsync is a function, which runs a command without sync
 func RunCommandAsync(command Command, args []string) {
 	kill := make(chan bool, 1)
 	signals := make(chan os.Signal, 1)
