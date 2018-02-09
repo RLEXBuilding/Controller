@@ -6,8 +6,8 @@ import (
 	"os"
 	"runtime"
 
-	"github.com/RLEXBuilding/Controller/commands"
-	"github.com/RLEXBuilding/Controller/util"
+	"github.com/DeepRobin/Controller/commands"
+	"github.com/DeepRobin/Controller/util"
 	"github.com/fatih/color"
 )
 
